@@ -21,10 +21,36 @@ function App() {
 
     try {
       // Create a descriptive prompt based on user input
-      const prompt = `Create a high-quality, 8k resolution, cinematic LinkedIn header banner. Theme: ${data.style}. Profession: ${data.profession}. Style: ${data.style}. 
-      Details: extremely detailed, photorealistic, Unreal Engine 5 render, dramatic lighting, professional atmosphere, elegant, minimalist but rich textures, abstract geometric shapes or modern workspace background. 
-      Aspect Ratio: Wide 3:1. 
-      Constraints: No text, no words, clean background, high contrast, sharp focus, award-winning composition.`;
+      const prompt = `
+       Create a high-quality, cinematic Twitter (X) profile header banner.
+        Concept:
+        A visually striking scene that represents the profession of ${
+          data.profession
+        }, expressed through environment, objects, and mood — without any text or symbols.
+
+        Visual Style:
+        ${
+          data.styleDescription || data.style
+        }, modern, clean, premium, minimal but sophisticated.
+        High realism, sharp focus, balanced contrast, soft cinematic lighting.
+
+        Environment:
+        Abstract modern workspace or conceptual background that subtly reflects the profession.
+        Use depth, layered elements, and negative space suitable for a LinkedIn header.
+
+        Composition:
+        Wide 3:1 aspect ratio (Twitter header format).
+        Important visual elements placed toward the center-right.
+        Keep bottom-left area clean to avoid overlap with profile picture and UI
+
+        Lighting & Detail:
+        Soft directional lighting, realistic shadows, rich textures, natural reflections.
+        High clarity, crisp details, no blur, no noise.
+
+        Constraints:
+        No text, no letters, no logos, no watermarks, no faces unless relevant to the profession.
+        Clean background, professional atmosphere only.
+        `;
 
       console.log("Generating with prompt:", prompt);
 

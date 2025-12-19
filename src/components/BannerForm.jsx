@@ -7,14 +7,25 @@ const BannerForm = ({ onGenerate, isGenerating }) => {
     style: "Modern",
   });
 
-  const styles = [
-    "Modern",
-    "Minimalist",
-    "Tech/Futuristic",
-    "Abstract",
-    "Professional",
-    "Creative",
-  ];
+  const styles = {
+    Modern:
+      "modern, clean design, soft gradients, balanced composition, contemporary lighting",
+
+    Minimalist:
+      "ultra-minimalist, lots of negative space, soft neutral colors, subtle gradients, calm atmosphere",
+
+    "Tech/Futuristic":
+      "futuristic tech aesthetic, digital glow, dark mode tones, neon accents, high-tech environment",
+
+    Abstract:
+      "abstract geometric shapes, artistic composition, layered depth, creative lighting, modern art style",
+
+    Professional:
+      "corporate, executive, polished look, neutral color palette, refined lighting, premium feel",
+
+    Creative:
+      "bold creative direction, vibrant accents, artistic lighting, expressive composition, modern design",
+  };
 
   // Load saved data on mount
   React.useEffect(() => {
@@ -35,7 +46,11 @@ const BannerForm = ({ onGenerate, isGenerating }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onGenerate(formData);
+    const submittableData = {
+      ...formData,
+      styleDescription: styles[formData.style] || formData.style,
+    };
+    onGenerate(submittableData);
   };
 
   return (
@@ -76,9 +91,9 @@ const BannerForm = ({ onGenerate, isGenerating }) => {
             value={formData.style}
             onChange={handleChange}
           >
-            {styles.map((style) => (
-              <option key={style} value={style}>
-                {style}
+            {Object.keys(styles).map((styleName) => (
+              <option key={styleName} value={styleName}>
+                {styleName}
               </option>
             ))}
           </select>
