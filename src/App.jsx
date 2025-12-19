@@ -17,7 +17,7 @@ function App() {
 
     try {
       // Create a descriptive prompt based on user input
-      const prompt = `A high quality, professional portfolio banner background for a ${data.profession}. Style: ${data.style}. Abstract, minimalist, 4k resolution, no text, wide aspect ratio 3:1.`;
+      const prompt = `Start with a professional LinkedIn header style. Theme: ${data.style}. Profession: ${data.profession}. High resolution, 4k, cinematic lighting, elegant, minimalist design, abstract geometric shapes or professional workspace background. Wide aspect ratio 3:1. No text, no words, clean background.`;
 
       console.log("Generating with prompt:", prompt);
 
@@ -30,7 +30,9 @@ function App() {
       }
 
       const promises = [1, 2, 3].map(() =>
-        puter.ai.txt2img(prompt).then((imageElement) => imageElement.src)
+        puter.ai
+          .txt2img(prompt, { model: "black-forest-labs/FLUX.1-schnell" })
+          .then((imageElement) => imageElement.src)
       );
 
       const generatedBanners = await Promise.all(promises);
