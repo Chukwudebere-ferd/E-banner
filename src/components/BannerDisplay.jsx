@@ -1,13 +1,13 @@
 import React from "react";
 
-const BannerDisplay = ({ banners, userData }) => {
+const BannerDisplay = ({ banners, userData, onRegenerate, isGenerating }) => {
   const { name, profession } = userData;
+  const [selectedImage, setSelectedImage] = React.useState(null);
 
   const handleDownload = async (bannerSrc, index) => {
     try {
-      // Create an image element to load the source
       const img = new Image();
-      img.crossOrigin = "anonymous"; // Needed if images are from external CORS-enabled domain
+      img.crossOrigin = "anonymous"; 
       img.src = bannerSrc;
 
       await new Promise((resolve, reject) => {
@@ -15,26 +15,16 @@ const BannerDisplay = ({ banners, userData }) => {
         img.onerror = reject;
       });
 
-      // Create canvas
       const canvas = document.createElement("canvas");
-      // Set canvas size to match image natural size
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
 
       const ctx = canvas.getContext("2d");
-
-      // 1. Draw the background image
       ctx.drawImage(img, 0, 0);
 
-      // 2. Add Overlay (Darken background slightly for text readability if needed, or just text)
-      // Let's add a slight subtle gradient at the center/bottom or user preference.
-      // For now, mimicking the CSS overlay which usually has a shadow or semi-transparent bg?
-      // actually the CSS didn't have a background, just text shadow. Let's do that.
 
-      // Configure Text Styles
-      // Scale font size based on image width to maintain ratio
-      const fontSizeName = canvas.width * 0.05; // 5% of width
-      const fontSizeProf = canvas.width * 0.03; // 3% of width
+      const fontSizeName = canvas.width * 0.05;
+      const fontSizeProf = canvas.width * 0.03; 
 
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -52,11 +42,9 @@ const BannerDisplay = ({ banners, userData }) => {
 
       ctx.fillText(name, centerX, centerY - fontSizeName * 0.5);
 
-      // Profession
       ctx.font = `${fontSizeProf}px Inter, sans-serif`;
-      ctx.shadowBlur = 4; // lighter shadow for smaller text
+      ctx.shadowBlur = 4; 
 
-      // Add slightly more spacing
       ctx.fillText(
         profession.toUpperCase(),
         centerX,
@@ -86,11 +74,40 @@ const BannerDisplay = ({ banners, userData }) => {
 
   return (
     <div className="banner-display-container">
-      <h3>Select Your Banner</h3>
+      {/* Modal for Full View */}
+      {selectedImage && (
+        <div className="modal-overlay" onClick={() => setSelectedImage(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setSelectedImage(null)}
+            >
+              &times;
+            </button>
+            <img src={selectedImage} alt="Full View Banner" />
+          </div>
+        </div>
+      )}
+
+      <div className="display-header">
+        <h3>Select Your Banner</h3>
+        <button
+          onClick={onRegenerate}
+          disabled={isGenerating}
+          className="regenerate-btn"
+        >
+          {isGenerating ? "Regenerating..." : "Regenerate Images"}
+        </button>
+      </div>
+
       <div className="banners-grid">
         {banners.map((bannerSrc, index) => (
           <div key={index} className="banner-card">
-            <div className="banner-preview">
+            <div
+              className="banner-preview"
+              onClick={() => setSelectedImage(bannerSrc)}
+              title="Click to view full size"
+            >
               <img src={bannerSrc} alt={`Generated Banner ${index + 1}`} />
               <div className="banner-overlay">
                 <h2 className="overlay-name">{name}</h2>

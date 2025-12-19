@@ -13,11 +13,18 @@ function App() {
     setIsGenerating(true);
     setBanners([]);
     setError(null);
-    setUserData({ name: data.name, profession: data.profession });
+    setUserData({
+      name: data.name,
+      profession: data.profession,
+      style: data.style,
+    });
 
     try {
       // Create a descriptive prompt based on user input
-      const prompt = `Start with a professional LinkedIn header style. Theme: ${data.style}. Profession: ${data.profession}. High resolution, 4k, cinematic lighting, elegant, minimalist design, abstract geometric shapes or professional workspace background. Wide aspect ratio 3:1. No text, no words, clean background.`;
+      const prompt = `Create a high-quality, 8k resolution, cinematic LinkedIn header banner. Theme: ${data.style}. Profession: ${data.profession}. Style: ${data.style}. 
+      Details: extremely detailed, photorealistic, Unreal Engine 5 render, dramatic lighting, professional atmosphere, elegant, minimalist but rich textures, abstract geometric shapes or modern workspace background. 
+      Aspect Ratio: Wide 3:1. 
+      Constraints: No text, no words, clean background, high contrast, sharp focus, award-winning composition.`;
 
       console.log("Generating with prompt:", prompt);
 
@@ -83,7 +90,12 @@ function App() {
 
         {error && <div className="error-message">{error}</div>}
 
-        <BannerDisplay banners={banners} userData={userData} />
+        <BannerDisplay
+          banners={banners}
+          userData={userData}
+          onRegenerate={() => handleGenerate(userData)}
+          isGenerating={isGenerating}
+        />
       </main>
 
       <footer className="footer">
