@@ -39,9 +39,33 @@ function App() {
       setBanners(generatedBanners);
     } catch (err) {
       console.error("Generation error:", err);
-      setError(
-        "Failed to generate banners. Please try again or check your internet connection."
+
+      const errorMessage = err.message || "";
+      const retryCount = parseInt(
+        localStorage.getItem("generationRetry") || "0"
       );
+
+      if (
+        (errorMessage.includes("401") ||
+          errorMessage.includes("Unauthenticated") ||
+          true) &&
+        retryCount < 3
+      ) {
+        localStorage.setItem("generationRetry", (retryCount + 1).toString());
+        setError(
+          `Security check or connection issue. Refreshing page in 3 seconds (Attempt ${
+            retryCount + 1
+          }/3)...`
+        );
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      } else {
+        localStorage.setItem("generationRetry", "0");
+        setError(
+          "Failed to generate banners. Please try again. If the issue persists, check your connection or try a different browser."
+        );
+      }
     } finally {
       setIsGenerating(false);
     }

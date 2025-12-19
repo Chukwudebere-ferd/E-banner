@@ -16,11 +16,21 @@ const BannerForm = ({ onGenerate, isGenerating }) => {
     "Creative",
   ];
 
+  // Load saved data on mount
+  React.useEffect(() => {
+    const savedData = localStorage.getItem("bannerFormData");
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
+
   const handleChange = (e) => {
-    setFormData({
+    const newFormData = {
       ...formData,
       [e.target.name]: e.target.value,
-    });
+    };
+    setFormData(newFormData);
+    localStorage.setItem("bannerFormData", JSON.stringify(newFormData));
   };
 
   const handleSubmit = (e) => {
