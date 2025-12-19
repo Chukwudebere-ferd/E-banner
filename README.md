@@ -1,18 +1,29 @@
-# React + Vite
+Project: Dynamic Portfolio Banner Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Overview:
+This project is a web application that allows users to generate personalized portfolio banners. 
+Users input their name, profession, and optionally select a style. The application generates 
+three unique banner images that the user can choose from or regenerate for new options.
 
-Currently, two official plugins are available:
+Core Features:
+- User Inputs: Name, profession, optional style/theme
+- AI-Powered Banner Generation: Uses a free Stable Diffusion model to create abstract/professional backgrounds
+- Multiple Options: Generates 3 banner variations at a time
+- Regenerate: Users can click a button to get 3 new options
+- Text Overlay: User’s name and profession are dynamically overlaid on the generated banner
+- Downloadable: Users can save the banner for personal use (portfolio, social media, LinkedIn)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Tech Stack:
+- Frontend: React (for user interface and dynamic banner display)
+- Backend: Node.js + Express (handles AI image requests)
+- AI Model: https://developer.puter.com/tutorials/free-unlimited-image-generation-api/
+- Text Overlay: HTML Canvas or CSS positioning
+- Hosting: Vercel 
 
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Purpose:
+This project demonstrates integration of AI-powered content generation with dynamic web UI. 
+It’s designed as a portfolio-worthy project to showcase skills in:
+- Frontend development (React)
+- Backend/API integration (Node.js/Express)
+- AI/ML integration (Stable Diffusion)
+- UX/UI design (banner selection and overlay)
